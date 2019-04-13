@@ -2,8 +2,8 @@
 
 
 ## Rules:
-First day and last day of a project, or sequence of projects, is a travel day.
-Any day in the middle of a project, or sequence of projects, is considered a full day.
+First day and last day of a project, or a sequence of projects, is a travel day.
+Any day in the middle of a project, or a sequence of projects, is considered a full day.
 If there is a gap between projects, then the days on either side of that gap are travel days.
 If two projects push up against each other, or overlap, then those days are full days as well.
 Any given day is only ever counted once, even if two projects are on the same day.
@@ -16,27 +16,38 @@ Given the following sets of projects, provide code which will calculate the reim
 
 Set 1:
   Project 1: Low Cost City Start Date: 9/1/15 End Date: 9/3/15
+  Results: ($45+$75+$45) = $165
 
 Set 2:
   Project 1: Low Cost City Start Date: 9/1/15 End Date: 9/1/15
   Project 2: High Cost City Start Date: 9/2/15 End Date: 9/6/15
   Project 3: Low Cost City Start Date: 9/6/15 End Date: 9/8/15
+  Results: 
+        Project 1: $75 
+        Project 2: ($85*5) = $425
+        Project 3: $75 + $45
+        Total: $500
 
 Set 3:
   Project 1: Low Cost City Start Date: 9/1/15 End Date: 9/3/15
   Project 2: High Cost City Start Date: 9/5/15 End Date: 9/7/15
   Project 3: High Cost City Start Date: 9/8/15 End Date: 9/8/15
+  Results: 
+        Project 1: $165
+        Project 2: $55 + $85 + $85 
+        Project 3: $85
 
 Set 4:
   Project 1: Low Cost City Start Date: 9/1/15 End Date: 9/1/15
   Project 2: Low Cost City Start Date: 9/1/15 End Date: 9/1/15
   Project 3: High Cost City Start Date: 9/2/15 End Date: 9/2/15
   Project 4: High Cost City Start Date: 9/2/15 End Date: 9/3/15
+  Results: 
+        Project 1: $75 
+        Project 2: $85
+        Project 3: $85
+        Project 4: $85
 
 
 # Questions 
-// - What if two dates of different rate
-//    overlap which one rate is taken? Probably the higher one.
-// - "If there is a gap between projects, then the days on
-//    either side of that gap are travel days. Does that mean
-//    in addition to one day or is this just first to last of a project?
+// Are the dates always going to be inorder?

@@ -5,27 +5,9 @@
 *@data: 4/13/19
 */
 
-//dollars per day in a low cost city.
-var travel_low = 45;
-var travel_high = 55;
-var full_low = 75;
-var full_high = 85;
-
-//NOTES: 
-// 1st & n^Last = "travel"
-// n = single date counted once.
-// p is the next project.
-// m is the number of days between projects
-// (n^(n+1) == p^first) || (n == p) = "full"
-// this is when m is greater than 1.
-// m > 1; n^last = "travel" & p^first = "travel"
-//  n^last > n < 1st = "full" == m;
-
 var express = require('express');
 var app = express();
 var fs = require("fs");
-var http = require('http');
-
 
 app.get('/api/dates', function (req, res) {
   fs.readFile(__dirname + '/data' + ".json", 'utf8', function (err, data) {
@@ -39,6 +21,7 @@ var server = app.listen(8081, function () {
   var port = server.address().port;
   console.log("app listening at http://127.0.0.1:%s", port);
 
+  //Here to show how a client's data might be pulled in.
   var request = require('request');
   request({
     url: 'http://127.0.0.1:8081/api/dates',
@@ -46,7 +29,9 @@ var server = app.listen(8081, function () {
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       //console.log(body);
-      reimburseCalcuator(body["test"]);
+      reimburseCalcuator(body);
+    } else {
+      console.error("Client data not found.");
     }
   });
 });
@@ -56,10 +41,63 @@ var server = app.listen(8081, function () {
 var reimburseCalcuator = function (data) {
   if (data instanceof Array) {
     console.log('value is Array!');
-    data.forEach(element => {
-      console.log(element);
-    });
+    for (var i = 0; i < 1; i++) {
+      reimbursement(data[i]["Set 1"]);
+    }
+
+
   } else {
-    console.log('Not an array');
+    console.error('An Array value not found.');
+    return null
   }
 };
+
+function reimbursement(dates) {
+  //console.log(dates);  
+  for (var i = 0; i < dates.length; i++) {
+    var item = dates[i];
+    console.log(item);
+    var firstDate = new Date(item["Start_Date"]);
+    var lastDate = new Date(item["End_Date"]);
+
+    console.log(firstDate, lastDate, numberofDays(firstDate, lastDate));
+  }
+}
+
+function numberofDays(date1, date2) {
+
+  // The number of milliseconds in one day
+  var ONE_DAY = 1000 * 60 * 60 * 24;
+
+  // Convert both dates to milliseconds
+  var date1_ms = date1.getTime();
+  var date2_ms = date2.getTime();
+
+  // Calculate the difference in milliseconds
+  var difference_ms = Math.abs(date1_ms - date2_ms);
+
+  // Convert back to days and return
+  return Math.round(difference_ms / ONE_DAY) + 1;
+
+}
+
+function GetDatePrices(days) {
+  //dollars per day in a low cost city.
+  var travel_low = 45;
+  var travel_high = 55;
+  var full_low = 75;
+  var full_high = 85;
+
+  //NOTES: 
+  // 1st & n^Last = "travel"
+  // n = single date counted once.
+  // p is the next project.
+  // m is the number of days between projects
+  // (n^(n+1) == p^first) || (n == p) = "full"
+  // this is when m is greater than 1.
+  // m > 1; n^last = "travel" & p^first = "travel"
+  //  n^last > n < 1st = "full" == m;
+  if(days > 1) {
+    return 
+  }
+}
