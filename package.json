@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/fassetar/simplethread_exercise/issues"
   },
-  "homepage": "https://github.com/fassetar/simplethread_exercise#readme"
+  "homepage": "https://github.com/fassetar/simplethread_exercise#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
