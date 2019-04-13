@@ -32,3 +32,11 @@ Set 4:
   Project 2: Low Cost City Start Date: 9/1/15 End Date: 9/1/15
   Project 3: High Cost City Start Date: 9/2/15 End Date: 9/2/15
   Project 4: High Cost City Start Date: 9/2/15 End Date: 9/3/15
+
+
+# Questions 
+// - What if two dates of different rate
+//    overlap which one rate is taken? Probably the higher one.
+// - "If there is a gap between projects, then the days on
+//    either side of that gap are travel days. Does that mean
+//    in addition to one day or is this just first to last of a project?

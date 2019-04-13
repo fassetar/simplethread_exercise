@@ -40,27 +40,26 @@ var server = app.listen(8081, function () {
   console.log("app listening at http://127.0.0.1:%s", port);
 
   var request = require('request');
-  request({ 
+  request({
     url: 'http://127.0.0.1:8081/api/dates',
     json: true
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       //console.log(body);
-      reimburseCalcuator(body);
+      reimburseCalcuator(body["test"]);
     }
   });
 });
 
+
+// Takes in an array of projects.
 var reimburseCalcuator = function (data) {
-  data.forEach(element => {
-    console.log(element);
-  });
+  if (data instanceof Array) {
+    console.log('value is Array!');
+    data.forEach(element => {
+      console.log(element);
+    });
+  } else {
+    console.log('Not an array');
+  }
 };
-
-
-//Questions 
-// - What if two dates of different rate
-//    overlap which one rate is taken? Probably the higher one.
-// - "If there is a gap between projects, then the days on
-//    either side of that gap are travel days. Does that mean
-//    in addition to one day or is this just first to last of a project?
