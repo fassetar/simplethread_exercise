@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/fassetar/simplethread_exercise#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "jslint": "^0.12.1"
   }
 }
