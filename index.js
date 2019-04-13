@@ -41,9 +41,9 @@ var server = app.listen(8081, function () {
 var reimburseCalcuator = function (data) {
   if (data instanceof Array) {
     console.log('value is Array!');
-    for (var i = 0; i < 1; i++) {
-      reimbursement(data[i]["Set 1"]);
-    }
+    //for (var i = 0; i < data.length; i++) {
+      reimbursement(data[1]["Set 2"]);
+    //}
 
 
   } else {
@@ -56,11 +56,7 @@ function reimbursement(dates) {
   //console.log(dates);  
   for (var i = 0; i < dates.length; i++) {
     var item = dates[i];
-    console.log(item);
-    var firstDate = new Date(item["Start_Date"]);
-    var lastDate = new Date(item["End_Date"]);
-
-    console.log(firstDate, lastDate, numberofDays(firstDate, lastDate));
+    console.log(GetDatePrices(item), "$" + GetDatePrices(item).reduce(getSum));
   }
 }
 
@@ -81,12 +77,34 @@ function numberofDays(date1, date2) {
 
 }
 
+function getSum(total, num) {
+  return total + num;
+}
+
 function GetDatePrices(days) {
-  //dollars per day in a low cost city.
-  var travel_low = 45;
-  var travel_high = 55;
-  var full_low = 75;
-  var full_high = 85;
+  var PriceList = [];
+  // var travel_low = 45;
+  // var travel_high = 55;
+  // var full_low = 75;
+  // var full_high = 85;
+
+  //console.log(days);
+  var firstDate = new Date(days["Start_Date"]);
+  var lastDate = new Date(days["End_Date"]);
+  //console.log(firstDate, lastDate, numberofDays(firstDate, lastDate));
+  var ofDays = numberofDays(firstDate, lastDate);
+
+  for (var i = 0; i < ofDays; i++) {
+    PriceList.push(45);
+    if (i !== 0 && i + 1 !== ofDays) //Middle Days    
+      PriceList[i] += 30;
+
+
+    if (days["City"] === "High Cost")
+      PriceList[i] += 10;
+
+  }
+
 
   //NOTES: 
   // 1st & n^Last = "travel"
@@ -97,7 +115,8 @@ function GetDatePrices(days) {
   // this is when m is greater than 1.
   // m > 1; n^last = "travel" & p^first = "travel"
   //  n^last > n < 1st = "full" == m;
-  if(days > 1) {
-    return 
-  }
+  // if (days > 1) {
+  //   return
+  // }
+  return PriceList;
 }
