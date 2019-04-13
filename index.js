@@ -42,7 +42,7 @@ var reimburseCalcuator = function (data) {
   if (data instanceof Array) {
     console.log('value is Array!');
     //for (var i = 0; i < data.length; i++) {
-      reimbursement(data[1]["Set 2"]);
+    reimbursement(data[2]["Set 3"]);
     //}
 
 
@@ -53,10 +53,47 @@ var reimburseCalcuator = function (data) {
 };
 
 function reimbursement(dates) {
-  //console.log(dates);  
+  //console.log(dates);
   for (var i = 0; i < dates.length; i++) {
     var item = dates[i];
-    console.log(GetDatePrices(item), "$" + GetDatePrices(item).reduce(getSum));
+    var nextDate = dates[i+1];
+    var PriceList = [];
+    // var travel_low = 45;
+    // var travel_high = 55;
+    // var full_low = 75;
+    // var full_high = 85;
+
+    //console.log(days);
+    var firstDate = new Date(item["Start_Date"]);
+    var lastDate = new Date(item["End_Date"]);
+    //console.log(firstDate, lastDate, numberofDays(firstDate, lastDate));
+    var ofDays = numberofDays(firstDate, lastDate);
+
+    for (var i = 0; i < ofDays; i++) {
+      PriceList.push(45); //base of travel_low
+
+      if (i !== 0 && i + 1 !== ofDays) //Middle Days    
+        PriceList[i] += 30;
+
+      if (item["City"] === "High Cost")
+        PriceList[i] += 10;
+    }
+
+
+    //NOTES: 
+    // 1st & n^Last = "travel"
+    // n = single date counted once.
+    // p is the next project.
+    // m is the number of days between projects
+    // (n^(n+1) == p^first) || (n == p) = "full"
+    // this is when m is greater than 1.
+    // m > 1; n^last = "travel" & p^first = "travel"
+    //  n^last > n < 1st = "full" == m;
+    // if (days > 1) {
+    //   return
+    // }    
+    console.log(PriceList, "$" + PriceList.reduce(getSum));
+    return PriceList;
   }
 }
 
@@ -79,44 +116,4 @@ function numberofDays(date1, date2) {
 
 function getSum(total, num) {
   return total + num;
-}
-
-function GetDatePrices(days) {
-  var PriceList = [];
-  // var travel_low = 45;
-  // var travel_high = 55;
-  // var full_low = 75;
-  // var full_high = 85;
-
-  //console.log(days);
-  var firstDate = new Date(days["Start_Date"]);
-  var lastDate = new Date(days["End_Date"]);
-  //console.log(firstDate, lastDate, numberofDays(firstDate, lastDate));
-  var ofDays = numberofDays(firstDate, lastDate);
-
-  for (var i = 0; i < ofDays; i++) {
-    PriceList.push(45);
-    if (i !== 0 && i + 1 !== ofDays) //Middle Days    
-      PriceList[i] += 30;
-
-
-    if (days["City"] === "High Cost")
-      PriceList[i] += 10;
-
-  }
-
-
-  //NOTES: 
-  // 1st & n^Last = "travel"
-  // n = single date counted once.
-  // p is the next project.
-  // m is the number of days between projects
-  // (n^(n+1) == p^first) || (n == p) = "full"
-  // this is when m is greater than 1.
-  // m > 1; n^last = "travel" & p^first = "travel"
-  //  n^last > n < 1st = "full" == m;
-  // if (days > 1) {
-  //   return
-  // }
-  return PriceList;
 }

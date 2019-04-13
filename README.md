@@ -44,9 +44,9 @@ Set 4:
   Project 4: High Cost City Start Date: 9/2/15 End Date: 9/3/15
   Results: 
         Project 1: $75 
-        Project 2: $85
+        Project 2: $0
         Project 3: $85
-        Project 4: $85
+        Project 4: $0
 
 
 # Questions 
