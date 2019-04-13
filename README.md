@@ -46,7 +46,7 @@ Set 4:
         Project 1: $75 
         Project 2: $0
         Project 3: $85
-        Project 4: $0
+        Project 4: $55
 
 
 # Questions 
