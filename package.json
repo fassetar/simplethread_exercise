@@ -1,0 +1,19 @@
+{
+  "name": "reimburse-calcuator",
+  "version": "0.0.1",
+  "description": "a calcuator for figuring out a clients reimbursement.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fassetar/simplethread_exercise.git"
+  },
+  "author": "fassetar@gmail.com",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/fassetar/simplethread_exercise/issues"
+  },
+  "homepage": "https://github.com/fassetar/simplethread_exercise#readme"
+}
