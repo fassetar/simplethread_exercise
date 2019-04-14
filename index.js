@@ -42,7 +42,7 @@ var reimburseCalcuator = function (data) {
   if (data instanceof Array) {
     console.log('value is Array!');
     //for (var i = 0; i < data.length; i++) {
-    reimbursement(data[1]["Set 2"]);
+    reimbursement(data[2]["Set 3"]);
     //}
 
 
@@ -75,14 +75,15 @@ function reimbursement(dates) {
       if (item["City"] === "High Cost")
         PriceList[z] += 10;
 
-      //Case of a full day - first days
+      //Case of a full day - first days going backwards
       if (z === 0 && i !== 0) {
-        if (z === 0 && numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) > 1) {
+        console.log(dates[i - 1]["End_Date"], numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])));
+        if (numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) <= 2) {
           PriceList[z] += 30;
         }
-      } else if (i + 1 !== dates.length && z + 1 === ofDays) { //Case of a full day - last days
-        //console.log(numberofDays(lastDate, new Date(nextDate["End_Date"])));
-        if (numberofDays(lastDate, new Date(nextDate["End_Date"])) > 1)
+      } else if (i + 1 !== dates.length && z + 1 === ofDays) { 
+        //Case of a full day - last days going forward        
+        if (numberofDays(lastDate, new Date(nextDate["End_Date"])) <= 2)
           PriceList[z] += 30;
       }
     }
