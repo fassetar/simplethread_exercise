@@ -71,35 +71,37 @@ function reimbursement(dates) {
       if (z !== 0 && z + 1 !== ofDays) //Middle Days    
         PriceList[z] += 30;
 
-      if (z === ofDays && numberofDays(lastDate, new Date(nextDate["End_Date"])) > 1) {
-        console.log(numberofDays(lastDate, new Date(nextDate["End_Date"])));
+      if (item["City"] === "High Cost")
+        PriceList[z] += 10;
+
+      if (z === ofDays && numberofDays(lastDate, new Date(nextDate["End_Date"])) == 1) {
+        //console.log(numberofDays(lastDate, new Date(nextDate["End_Date"])));
         PriceList[z] += 30;
       }
 
       //TODO: this will take the first day and change it to full if thats the case.
-      // if(z === 0 && numberofDays(firstDate, new Date(dates[i-1]["End_Date"])) > 1){
-      //     PriceList[z] += 30;
-      // }
+      // if (z === 0 && i !== 0) {
+      //   console.log(numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])), dates[i - 1]["End_Date"]);
+      //   if (z === 0 && numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) > 1) {
+      //     PriceList[z] = 0;
+      //   }        
+      //}
 
-      if (item["City"] === "High Cost")
-        PriceList[z] += 10;
     }
-
-
-    //NOTES: 
-    // 1st & n^Last = "travel"
-    // n = single date counted once.
-    // p is the next project.
-    // m is the number of days between projects
-    // (n^(n+1) == p^first) || (n == p) = "full"
-    // this is when m is greater than 1.
-    // m > 1; n^last = "travel" & p^first = "travel"
-    //  n^last > n < 1st = "full" == m;
-    // if (days > 1) {
-    //   return
-    // }    
     console.log(PriceList, "$" + PriceList.reduce(getSum));
   }
+}
+
+function remove_duplicates(arr) {
+  var obj = {};
+  var ret_arr = [];
+  for (var i = 0; i < arr.length; i++) {
+      obj[arr[i]] = true;
+  }
+  for (var key in obj) {
+      ret_arr.push(key);
+  }
+  return ret_arr;
 }
 
 function numberofDays(date1, date2) {
