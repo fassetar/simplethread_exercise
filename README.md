@@ -25,8 +25,8 @@ Set 2:
   Results: 
         Project 1: $75 
         Project 2: ($85*5) = $425
-        Project 3: $75 + $45
-        Total: $500
+        Project 3: $75  + $45
+        Total: $620
 
 Set 3:
   Project 1: Low Cost City Start Date: 9/1/15 End Date: 9/3/15

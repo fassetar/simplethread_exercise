@@ -66,6 +66,7 @@ function reimbursement(dates) {
     var ofDays = numberofDays(firstDate, lastDate);
 
     for (var z = 0; z < ofDays; z++) {
+
       PriceList.push(45); //base of travel_low
 
       if (z !== 0 && z + 1 !== ofDays) //Middle Days    
@@ -74,19 +75,16 @@ function reimbursement(dates) {
       if (item["City"] === "High Cost")
         PriceList[z] += 10;
 
-      if (z === ofDays && numberofDays(lastDate, new Date(nextDate["End_Date"])) == 1) {
+      //Case of a full day - first days
+      if (z === 0 && i !== 0) {
+        if (z === 0 && numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) > 1) {
+          PriceList[z] += 30;
+        }
+      } else if (i + 1 !== dates.length && z + 1 === ofDays) { //Case of a full day - last days
         //console.log(numberofDays(lastDate, new Date(nextDate["End_Date"])));
-        PriceList[z] += 30;
+        if (numberofDays(lastDate, new Date(nextDate["End_Date"])) > 1)
+          PriceList[z] += 30;
       }
-
-      //TODO: this will take the first day and change it to full if thats the case.
-      // if (z === 0 && i !== 0) {
-      //   console.log(numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])), dates[i - 1]["End_Date"]);
-      //   if (z === 0 && numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) > 1) {
-      //     PriceList[z] = 0;
-      //   }        
-      //}
-
     }
     console.log(PriceList, "$" + PriceList.reduce(getSum));
   }
@@ -96,10 +94,10 @@ function remove_duplicates(arr) {
   var obj = {};
   var ret_arr = [];
   for (var i = 0; i < arr.length; i++) {
-      obj[arr[i]] = true;
+    obj[arr[i]] = true;
   }
   for (var key in obj) {
-      ret_arr.push(key);
+    ret_arr.push(key);
   }
   return ret_arr;
 }
