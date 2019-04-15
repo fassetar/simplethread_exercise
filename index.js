@@ -1,16 +1,18 @@
 "use strict";
+/*jslint node: true */
 /*
 *@autor: Anthony Fassett
 *@description: A calcuator for figuring out a clients reimbursement.
 *@data: 4/13/19
 */
 
-var express = require('express');
+var express = require("express");
 var app = express();
 var fs = require("fs");
+var request = require("request");
 
-app.get('/api/dates', function (req, res) {
-  fs.readFile(__dirname + '/data' + ".json", 'utf8', function (err, data) {
+app.get("/api/dates", function (req, res) {
+  fs.readFile(__dirname + "/data" + ".json", "utf8", function (err, data) {
     res.send(data);
     res.end(data);
   });
@@ -22,9 +24,8 @@ var server = app.listen(8081, function () {
   console.log("app listening at http://127.0.0.1:%s", port);
 
   //Here to show how a client's data might be pulled in.
-  var request = require('request');
   request({
-    url: 'http://127.0.0.1:8081/api/dates',
+    url: "http://127.0.0.1:8081/api/dates",
     json: true
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -40,17 +41,15 @@ var server = app.listen(8081, function () {
 // Takes in an array of projects.
 var reimburseCalcuator = function (data) {
   if (data instanceof Array) {
-    console.log('value is Array!');
+    console.log("value is Array!");
     for (var i = 0; i < data.length; i++) {
-      var tmp = "Set "+ (i + 1);
+      var tmp = "Set " + (i + 1);
       console.log(tmp);
       reimbursement(data[i][tmp]);
     }
-
-
   } else {
-    console.error('An Array value not found.');
-    return null
+    console.error("An Array value not found.");
+    return null;
   }
 };
 
@@ -70,13 +69,13 @@ function reimbursement(dates) {
     for (var z = 0; z < ofDays; z++) {
 
       PriceList.push(45); //base of travel_low
-    
+
       if (item["City"] === "High Cost")
         PriceList[z] += 10;
 
-        if (z !== 0 && z + 1 !== ofDays) {//Middle Days    
+      if (z !== 0 && z + 1 !== ofDays) {//Middle Days    
         PriceList[z] += 30;
-        } else if (z === 0 && i !== 0) { //Case of a full day - first days going backwards
+      } else if (z === 0 && i !== 0) { //Case of a full day - first days going backwards
         console.log(dates[i - 1]["End_Date"], numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])));
         if (numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) <= 2) {
           PriceList[z] += 30;
@@ -90,9 +89,9 @@ function reimbursement(dates) {
         if (numberofDays(lastDate, new Date(nextDate["Start_Date"])) <= 2)
           PriceList[z] += 30;
       }
-    
+
     }
-    reduceDups(Overlaps, PriceList);
+    reduceOverlaps(Overlaps, PriceList);
     if (PriceList.length != 0) {
       console.log(PriceList, "$" + PriceList.reduce(getSum));
     } else {
@@ -101,7 +100,7 @@ function reimbursement(dates) {
   }
 }
 
-function reduceDups(overlaps, prices) {
+function reduceOverlaps(overlaps, prices) {
   overlaps.forEach(element => {
     prices.splice(element, 1);
   });
