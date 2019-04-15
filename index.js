@@ -42,7 +42,7 @@ var reimburseCalcuator = function (data) {
   if (data instanceof Array) {
     console.log('value is Array!');
     //for (var i = 0; i < data.length; i++) {
-    reimbursement(data[1]["Set 2"]);
+    reimbursement(data[3]["Set 4"]);
     //}
 
 
@@ -92,16 +92,17 @@ function reimbursement(dates) {
           PriceList[z] += 30;
       }
     }
-    //reduceDups(Overlaps, PriceList);
+    reduceDups(Overlaps, PriceList);
     console.log(PriceList, "$" + PriceList.reduce(getSum));
   }
 }
 
 function reduceDups(overlaps, prices) {
   overlaps.forEach(element => {
-    prices.splice(2, 1);
+    prices.splice(element, 1);
   });
 }
+
 function numberofDays(date1, date2) {
 
   // The number of milliseconds in one day
