@@ -58,7 +58,7 @@ function reimbursement(dates) {
     var item = dates[i];
     var nextDate = dates[i + 1];
     var PriceList = [];
-
+    var Overlaps = [];
     var firstDate = new Date(item["Start_Date"]);
     var lastDate = new Date(item["End_Date"]);
 
@@ -81,31 +81,27 @@ function reimbursement(dates) {
         if (numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) <= 2) {
           PriceList[z] += 30;
         }
+        //Dup case collection.
+        if (numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) == 1) {
+          Overlaps.push(z);
+        }
       }
-      // if (i + 1 !== dates.length)
-      //   console.log(z+1, ofDays,numberofDays(lastDate, new Date(nextDate["Start_Date"])), numberofDays(lastDate, new Date(nextDate["Start_Date"])) <= 2);
       if (i + 1 !== dates.length && z + 1 === ofDays) {
         //Case of a full day - last days going forward        
         if (numberofDays(lastDate, new Date(nextDate["Start_Date"])) <= 2)
           PriceList[z] += 30;
       }
     }
+    //reduceDups(Overlaps, PriceList);
     console.log(PriceList, "$" + PriceList.reduce(getSum));
   }
 }
 
-function remove_duplicates(arr) {
-  var obj = {};
-  var ret_arr = [];
-  for (var i = 0; i < arr.length; i++) {
-    obj[arr[i]] = true;
-  }
-  for (var key in obj) {
-    ret_arr.push(key);
-  }
-  return ret_arr;
+function reduceDups(overlaps, prices) {
+  overlaps.forEach(element => {
+    prices.splice(2, 1);
+  });
 }
-
 function numberofDays(date1, date2) {
 
   // The number of milliseconds in one day
