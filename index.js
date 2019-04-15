@@ -41,9 +41,11 @@ var server = app.listen(8081, function () {
 var reimburseCalcuator = function (data) {
   if (data instanceof Array) {
     console.log('value is Array!');
-    //for (var i = 0; i < data.length; i++) {
-    reimbursement(data[3]["Set 4"]);
-    //}
+    for (var i = 0; i < data.length; i++) {
+      var tmp = "Set "+ (i + 1);
+      console.log(tmp);
+      reimbursement(data[i][tmp]);
+    }
 
 
   } else {
