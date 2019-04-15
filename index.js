@@ -68,15 +68,13 @@ function reimbursement(dates) {
     for (var z = 0; z < ofDays; z++) {
 
       PriceList.push(45); //base of travel_low
-
-      if (z !== 0 && z + 1 !== ofDays) //Middle Days    
-        PriceList[z] += 30;
-
+    
       if (item["City"] === "High Cost")
         PriceList[z] += 10;
 
-      //Case of a full day - first days going backwards
-      if (z === 0 && i !== 0) {
+        if (z !== 0 && z + 1 !== ofDays) {//Middle Days    
+        PriceList[z] += 30;
+        } else if (z === 0 && i !== 0) { //Case of a full day - first days going backwards
         console.log(dates[i - 1]["End_Date"], numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])));
         if (numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) <= 2) {
           PriceList[z] += 30;
@@ -85,15 +83,19 @@ function reimbursement(dates) {
         if (numberofDays(firstDate, new Date(dates[i - 1]["End_Date"])) == 1) {
           Overlaps.push(z);
         }
-      }
-      if (i + 1 !== dates.length && z + 1 === ofDays) {
+      } else if (i + 1 !== dates.length && z + 1 === ofDays) {
         //Case of a full day - last days going forward        
         if (numberofDays(lastDate, new Date(nextDate["Start_Date"])) <= 2)
           PriceList[z] += 30;
       }
+    
     }
     reduceDups(Overlaps, PriceList);
-    console.log(PriceList, "$" + PriceList.reduce(getSum));
+    if (PriceList.length != 0) {
+      console.log(PriceList, "$" + PriceList.reduce(getSum));
+    } else {
+      console.log(PriceList, "$0");
+    }
   }
 }
 
